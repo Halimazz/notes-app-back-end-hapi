@@ -1,3 +1,5 @@
+const ClientError = require('../../exceptions/ClientError');
+
 class NotesHandler {
   constructor(service) {
     this._service = service;
@@ -24,9 +26,17 @@ class NotesHandler {
       response.code(201);
       return response;
     } catch (error) {
+      if (error instanceof ClientError) {
+        const response = h.response({
+          status: "fail",
+          message: error.message,
+        });
+        response.code(error.statusCode);
+        return response;
+      }
       const response = h.response({
-        status: "fail",
-        message: error.message,
+        status: "error",
+        message: "Terjadi kesalahan pada server",
       });
       response.code(500);
       return response;
@@ -52,11 +62,19 @@ class NotesHandler {
         data: { note },
       };
     } catch (error) {
+      if (error instanceof ClientError) {
+        const response = h.response({
+          status: 'fail',
+          message: error.message,
+        });
+        response.code(error.statusCode);
+        return response;
+      }
       const response = h.response({
-        status: "fail",
-        message: error.message,
+        status: 'error',
+        message: 'Terjadi kesalahan pada server',
       });
-      response.code(404);
+      response.code(500);
       return response;
     }
   }
@@ -71,11 +89,19 @@ class NotesHandler {
         message: "Catatan berhasil diperbarui",
       };
     } catch (error) {
+      if (error instanceof ClientError) {
+        const response = h.response({
+          status: "fail",
+          message: error.message,
+        });
+        response.code(error.statusCode);
+        return response;
+      }
       const response = h.response({
-        status: "fail",
-        message: error.message,
+        status: "error",
+        message: "Terjadi kesalahan pada server",
       });
-      response.code(404);
+      response.code(500);
       return response;
     }
   }
@@ -90,11 +116,19 @@ class NotesHandler {
         message: "Catatan berhasil dihapus",
       };
     } catch (error) {
+      if (error instanceof ClientError) {
+        const response = h.response({
+          status: "fail",
+          message: error.message,
+        });
+        response.code(error.statusCode);
+        return response;
+      }
       const response = h.response({
-        status: "fail",
-        message: error.message,
+        status: "error",
+        message: "Terjadi kesalahan pada server",
       });
-      response.code(404);
+      response.code(500);
       return response;
     }
   }
