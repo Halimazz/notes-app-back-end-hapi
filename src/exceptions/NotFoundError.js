@@ -6,3 +6,5 @@ class NotFoundError extends ClientError {
     this.name = "NotFoundError";
   }
 }
+
+module.exports = NotFoundError;
